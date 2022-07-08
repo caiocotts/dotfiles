@@ -6,28 +6,21 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 source /etc/zsh_command_not_found
-source ~/.zplug/init.zsh
-zplug zplug/zplug, hook-build:zplug --self-manage
 
+zi_home="${HOME}/.zi"
+source "${zi_home}/bin/zi.zsh"
+
+zi ice depth=1; zi light romkatv/powerlevel10k
+zi light zsh-users/zsh-autosuggestions
+zi light zsh-users/zsh-completions
+zi light zsh-users/zsh-history-substring-search
+zi light zdharma/fast-syntax-highlighting
 
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
-#zplug "spaceship-prompt/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
-zplug "romkatv/powerlevel10k", as:theme, depth:1
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zdharma/fast-syntax-highlighting", defer:2
 
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-time zplug load
 
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down

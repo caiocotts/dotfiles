@@ -1,3 +1,5 @@
 alias ls='ls --color=auto'
 alias ll='ls -lah'
 alias l='ls'
+alias icat="kitty +kitten icat"
+alias rclone.crypt='rclone mount crypt: ~/rclone --daemon'
