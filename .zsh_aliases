@@ -3,3 +3,5 @@ alias ll='ls -lah'
 alias l='ls'
 alias icat="kitty +kitten icat"
 alias rclone.crypt='rclone mount crypt: ~/rclone --daemon'
+alias gogh='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
+alias ducks='du -cksh * | sort -hr'
