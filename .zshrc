@@ -13,18 +13,32 @@ zi ice depth=1; zi light romkatv/powerlevel10k
 zi light zsh-users/zsh-autosuggestions
 zi light zsh-users/zsh-completions
 zi light zsh-users/zsh-history-substring-search
-zi light zdharma/fast-syntax-highlighting
+zi light z-shell/F-Sy-H
+
+setopt auto_cd
+setopt hist_ignore_dups
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
+CASE_SENSITIVE='false'
 
 autoload -U compinit; compinit
 
 bindkey  "^[[A"   history-substring-search-up
 bindkey  "^[[B"   history-substring-search-down
+#bindkey "$terminfo[kcuu1]" history-substring-search-up
+#bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey  "^[[H"   beginning-of-line
 bindkey  "^[[F"   end-of-line
+if [[ -n "$TMUX" ]]; then
+  # Running in tmux
+  bindkey "^[[1~" beginning-of-line
+  bindkey "^[[4~" end-of-line
+fi 
 bindkey  "^[[3~"  delete-char
 
 
@@ -35,9 +49,9 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-PATH=$PATH:/home/caio/go/bin
+PATH=$HOME/go/bin:$PATH
 
-eval "$(fnm env --use-on-cd)" # fnm initialization
+#eval "$(fnm env --use-on-cd)" # fnm initialization
 
 eval "$(direnv hook zsh)" # direvn initialization
 
@@ -59,3 +73,18 @@ fuck () {
     export PYTHONIOENCODING=$TF_PYTHONIOENCODING;
     test -n "$TF_CMD" && print -s $TF_CMD
 }
+
+# fnm
+export PATH="/home/caio/.local/share/fnm:$PATH"
+eval "`fnm env`"
+
+#flutter
+export PATH=/opt/flutter/bin:$PATH
+export CHROME_EXECUTABLE=google-chrome-stable
+
+# fnm
+export PATH="/home/caio/.local/share/fnm:$PATH"
+eval "`fnm env`"
+
+# zsh
+eval "$(navi widget zsh)"
