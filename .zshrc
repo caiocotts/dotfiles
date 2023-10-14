@@ -5,7 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-
 zi_home="${HOME}/.zi"
 source "${zi_home}/bin/zi.zsh"
 
@@ -41,20 +40,27 @@ if [[ -n "$TMUX" ]]; then
 fi 
 bindkey  "^[[3~"  delete-char
 
-
 if [ -f ~/.zsh_aliases ]; then
     . ~/.zsh_aliases
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+RLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
+if [[ -f ~/.p10k.zsh && $TERM != linux ]]; 
+    then
+        ln -sf $PWD/dotfiles/.p10k.zsh ~/.p10k.zsh
+        source ~/.p10k.zsh
+    else
+        ln -sf $PWD/dotfiles/.p10k.zsh.console ~/.p10k.zsh
+        source ~/.p10k.zsh
+fi
 
 PATH=$HOME/go/bin:$PATH
 
 #eval "$(fnm env --use-on-cd)" # fnm initialization
 
 eval "$(direnv hook zsh)" # direvn initialization
-
 
 # thefuck alias
 fuck () {
@@ -78,13 +84,4 @@ fuck () {
 export PATH="/home/caio/.local/share/fnm:$PATH"
 eval "`fnm env`"
 
-#flutter
-export PATH=/opt/flutter/bin:$PATH
-export CHROME_EXECUTABLE=google-chrome-stable
-
-# fnm
-export PATH="/home/caio/.local/share/fnm:$PATH"
-eval "`fnm env`"
-
-# zsh
-eval "$(navi widget zsh)"
+export RADV_PERFTEST='rt'
