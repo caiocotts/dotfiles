@@ -4,8 +4,13 @@ alias l='ls'
 alias rclone.crypt='rclone mount crypt: ~/rclone --daemon'
 alias gogh='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
 alias ducks='du -cksh * | sort -hr'
-[ "$TERM" = "xterm-kitty" ] &&  alias icat="kitty +kitten icat"
-[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
+if [ "$TERM" = "xterm-kitty" ]; then
+  alias icat="kitty +kitten icat"
+  alias ssh="kitty +kitten ssh"
+  else
+    alias icat="echo 'icat is a kitty terminal command'"
+fi
 alias unclutter='sudo pacman -Qtdq | sudo pacman -Rns -'
 alias ip='ip -c'
-
+alias code='codium'
+alias vencord-install='sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"'
