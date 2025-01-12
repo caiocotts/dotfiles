@@ -12,5 +12,11 @@ if [ "$TERM" = "xterm-kitty" ]; then
 fi
 alias unclutter='sudo pacman -Qtdq | sudo pacman -Rns -'
 alias ip='ip -c'
-alias code='codium'
 alias vencord-install='sh -c "$(curl -sS https://raw.githubusercontent.com/Vendicated/VencordInstaller/main/install.sh)"'
+alias open='xdg-open'
+
+function yt-dlpo() { # yt-dlp with some default options
+  yt-dlp -o "%(artist)s/%(album)s/%(title)s.%(ext)s" $1 -x --cookies-from-browser brave:"Profile 1" --embed-metadata
+}
+alias rclone="rclone -P"
+
