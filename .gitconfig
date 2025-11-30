@@ -6,6 +6,7 @@
 	insteadOf = https://github.com/
 
 [alias]
+	ps = push
 	st = status
 	co = checkout
 	ci = commit
@@ -17,3 +18,7 @@
 	hard-undo-last-commit = reset --hard 'HEAD^'
 	who = "!f() { user=`git config user.name`; email=`git config user.email`; echo \"$user <$email>\"; }; f"
 
+[init]
+	defaultBranch = main
+[core]
+	autocrlf = input
