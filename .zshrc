@@ -12,6 +12,8 @@ fi
 export RADV_PERFTEST='rt' # get steam games to use raytracing
 export ELECTRON_OZONE_PLATFORM_HINT=wayland # attempt to make electron apps use wayland
 
+export CHROME_EXECUTABLE='brave'
+
 HISTSIZE=1000 # number of commands to keep in history
 SAVEHIST=1000 
 HISTFILE=~/.zsh_history # history file location
@@ -22,7 +24,12 @@ CASE_SENSITIVE='false'
 ############### Additions to PATH ###############
 #################################################
 
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/caio/.zsh/completions:"* ]]; then export FPATH="/home/caio/.zsh/completions:$FPATH"; fi
+
 export PATH=$HOME/go/bin:$PATH # add go binaries to path
+export PATH=$PATH:/home/caio/.local/bin
+export PATH="$PATH:/home/caio/.dotnet/tools"
 
 #################################################
 ######### Initialize zi plugin manager ##########
@@ -65,9 +72,24 @@ setopt hist_ignore_dups
 setopt append_history
 setopt inc_append_history
 setopt share_history
+setopt hist_ignore_space
 
-zstyle ':completion:*' menu select
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose yes
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+zstyle ':completion:*' use-cache true
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' menu select
 
 if [ -f ~/.zsh_aliases ]; then
     . ~/.zsh_aliases
@@ -95,11 +117,11 @@ bindkey  "^[[3~"  delete-char
 ############## Initialize other tools ##############
 ####################################################
 
-eval "$(direnv hook zsh)" # direvn initialization
-
 eval "$(zoxide init --cmd cd zsh)"  # initailize zoxide and substitute cd
 
-eval "$(fnm env --use-on-cd)"
+eval "$(mise activate zsh)"
+
+. "/home/caio/.deno/env"
 
 ####################################################
 ########### p10k configuration selector ############
