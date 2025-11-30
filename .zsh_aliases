@@ -19,4 +19,4 @@ function yt-dlpo() { # yt-dlp with some default options
   yt-dlp -o "%(artist)s/%(album)s/%(title)s.%(ext)s" $1 -x --cookies-from-browser brave:"Profile 1" --embed-metadata
 }
 alias rclone="rclone -P"
-
+alias ppm="pnpm"
